@@ -103,7 +103,7 @@ public final class SetupManager {
         }
         //THIS HAS TO GO LAST
         IntentWindow intentWindow = new IntentWindow(this);
-        if (!intentWindow.isConfirmedWillNot()) {
+        if (!intentWindow.isConfirmedWill()) {
             windows.add(intentWindow);
         }
         // Nothing to install?.. Begone.
@@ -303,7 +303,7 @@ public final class SetupManager {
         BackgroundExecutorService.schedule(() -> SettingsGroupManager.instance().save());
         if (_currentWindow instanceof IntentWindow) {
             IntentWindow intent = (IntentWindow) _currentWindow;
-            if (!intent.isConfirmedWillNot()) {
+            if (!intent.isConfirmedWill()) {
                 GUIMediator.showWarning("FrostWire is not distributed to people who intend to use it for the purposes of copyright infringement.\n\nThank you for your interest; however, you cannot continue to use FrostWire at this time.");
                 System.exit(1);
             }
