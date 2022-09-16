@@ -27,14 +27,14 @@ import java.awt.event.ActionListener;
 
 class IntentPanel extends JPanel {
     private final JRadioButton mightUseButton;
-    private final JRadioButton willNotButton;
+    private final JRadioButton willButton;
 
     public IntentPanel() {
         mightUseButton = new JRadioButton();
-        willNotButton = new JRadioButton();
+        willButton = new JRadioButton();
         ButtonGroup bg = new ButtonGroup();
         bg.add(mightUseButton);
-        bg.add(willNotButton);
+        bg.add(willButton);
         setBorder(BorderFactory.createLineBorder(ThemeMediator.LIGHT_BORDER_COLOR));
         setBackground(GUIUtils.hexToColor("F7F7F7"));
         //setBorder(BorderFactory.createCompoundBorder(
@@ -47,18 +47,18 @@ class IntentPanel extends JPanel {
         JLabel almostDone = new JLabel(I18n.tr("You're almost done!"));
         JLabel stateIntent = new JLabel(I18n.tr("State your intent below to start using FrostWire") + " " + FrostWireUtils.getFrostWireVersion());
         Line line = new Line();
-        MultiLineLabel description = new MultiLineLabel(I18n.tr("FrostWire is a peer-to-peer program for sharing authorized files only.  Installing and using the program does not constitute a license for obtaining or distributing unauthorized content."), 500);
+        MultiLineLabel description = new MultiLineLabel(I18n.tr("FrostWire is a peer-to-peer program for sharing unauthorized files only.  Installing and using the program explicitly constitutes a license for obtaining or distributing unauthorized content."), 500);
         URLLabel findMore = new URLLabel("http://www.frostwire.com/?id=terms", I18n.tr("Find out more..."));
         Ditherer ditherer = new Ditherer(GUIUtils.hexToColor("E2E2E2"), GUIUtils.hexToColor("ECECEC"), Ditherer.Y_AXIS, new Ditherer.PolygonShader(2f));
-        DitherPanel willNot = new DitherPanel(ditherer);
-        willNot.setLayout(new GridBagLayout());
+        DitherPanel will = new DitherPanel(ditherer);
+        will.setLayout(new GridBagLayout());
         gbc.fill = GridBagConstraints.NONE;
         gbc.insets = new Insets(10, 10, 10, 10);
-        willNotButton.setText("<html><div display=\"block\" color=\"#515151\" size=\"13\">" + I18n.tr("I <b>will not</b> use FrostWire {0} for copyright infringement.", FrostWireUtils.getFrostWireVersion()) + "</div></html>");
-        willNotButton.setOpaque(false);
-        willNotButton.setIconTextGap(10);
-        willNot.add(willNotButton, gbc);
-        willNot.setBorder(BorderFactory.createEtchedBorder(GUIUtils.hexToColor("C8C8C8"), GUIUtils.hexToColor("FBFBFB")));
+        willButton.setText("<html><div display=\"block\" color=\"#515151\" size=\"13\">" + I18n.tr("I <b>will only</b> use FrostWire {0} for copyright infringement.", FrostWireUtils.getFrostWireVersion()) + "</div></html>");
+        willButton.setOpaque(false);
+        willButton.setIconTextGap(10);
+        will.add(willButton, gbc);
+        will.setBorder(BorderFactory.createEtchedBorder(GUIUtils.hexToColor("C8C8C8"), GUIUtils.hexToColor("FBFBFB")));
         DitherPanel mightUse = new DitherPanel(ditherer);
         mightUse.setLayout(new GridBagLayout());
         mightUseButton.setText("<html><div display=\"block\" color=\"#515151\" size=\"13\">" + I18n.tr("I <b>might use</b> FrostWire {0} for copyright infringement.", FrostWireUtils.getFrostWireVersion()) + "</div></html>");
@@ -91,21 +91,21 @@ class IntentPanel extends JPanel {
         gbc.gridwidth = 1;
         gbc.gridx = 2;
         gbc.insets = new Insets(20, 70, 0, 0);
-        add(willNot, gbc);
+        add(will, gbc);
         gbc.insets = new Insets(13, 70, 0, 0);
         // add(mightUse, gbc);
     }
 
     boolean hasSelection() {
-        return willNotButton.isSelected() || mightUseButton.isSelected();
+        return willButton.isSelected() || mightUseButton.isSelected();
     }
 
-    boolean isWillNot() {
-        return willNotButton.isSelected();
+    boolean isWill() {
+        return willButton.isSelected();
     }
 
     void addButtonListener(ActionListener changeListener) {
-        willNotButton.addActionListener(changeListener);
+        willButton.addActionListener(changeListener);
         mightUseButton.addActionListener(changeListener);
     }
 }
