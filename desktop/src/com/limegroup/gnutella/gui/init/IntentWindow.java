@@ -32,7 +32,7 @@ import java.util.Properties;
  * State Your Intent.
  */
 final class IntentWindow extends SetupWindow {
-    private boolean setWillNot = false;
+    private boolean setWill = false;
     private Properties properties;
 
     IntentWindow(SetupManager manager) {
@@ -53,12 +53,12 @@ final class IntentWindow extends SetupWindow {
                 IOUtils.closeQuietly(fis);
             }
         }
-        String exists = properties.getProperty("willnot");
+        String exists = properties.getProperty("will");
         return exists != null && exists.equals("true");
     }
 
-    boolean isConfirmedWillNot() {
-        return isCurrentVersionChecked() || setWillNot;
+    boolean isConfirmedWill() {
+        return isCurrentVersionChecked() || setWill;
     }
 
     @Override
@@ -73,7 +73,7 @@ final class IntentWindow extends SetupWindow {
         intentPanel.addButtonListener(e -> {
             if (intentPanel.hasSelection()) {
                 setNext(IntentWindow.this);
-                setWillNot = intentPanel.isWillNot();
+                setWill = intentPanel.isWill();
                 _manager.enableActions(getAppropriateActions());
             }
         });
@@ -81,8 +81,8 @@ final class IntentWindow extends SetupWindow {
 
     @Override
     public void applySettings(boolean loadCoreComponents) {
-        if (setWillNot) {
-            properties.put("willnot", "true");
+        if (setWill) {
+            properties.put("will", "true");
             try {
                 properties.store(new FileOutputStream(getPropertiesFile()), "Started & Ran Versions");
             } catch (IOException ignored) {
